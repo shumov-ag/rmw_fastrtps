@@ -53,6 +53,9 @@ public:
   attachCondition(std::mutex * conditionMutex, std::condition_variable * conditionVariable)
   {
     std::lock_guard<std::mutex> lock(internalMutex_);
+    if (conditionMutex_ != nullptr) {
+      throw std::runtime_error("The guard condition had already been attached");
+    }
     conditionMutex_ = conditionMutex;
     conditionVariable_ = conditionVariable;
   }
